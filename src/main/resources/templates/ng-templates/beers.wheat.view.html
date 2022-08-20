@@ -1,0 +1,135 @@
+<div layout="column" ng-controller="tab" ng-init="tab_init()">
+    <md-card>
+        <md-toolbar class="md-table-toolbar md-default">
+            <div class="md-toolbar-tools">
+                <span>Розрахункові листки</span>
+                <div flex></div>
+
+                <a class="md-button md-ink-ripple active" href="#!/d/porters" ng-show="showadmintab">
+                    <md-icon style="color: rgb(63,81,181);">download</md-icon>
+                    Завантажити
+                    <div class="md-ripple-container" style=""></div>
+                </a>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding>
+            <md-dialog-content>
+                <md-content layout-gt-sm="row" layout-padding>
+                    <md-input-container flex="30">
+                        <label>Период</label>
+                        <md-select ng-model="period" ng-change="change_period()">
+                            <md-option ng-repeat="state in states" ng-value="state">
+                                {{state.text_p + "(" +state.day+" днів, " +state.hours+" годин)"}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </md-content>
+            </md-dialog-content>
+        </md-content>
+    </md-card>
+    <div layout="row" layout-align="center center" style="margin: 18px 0; color: red" ng-show="info">
+        {{alert}}
+    </div>
+    <div layout="row" ng-show="b_table_r1">
+            <md-card>
+                <md-table-container>
+                    <table md-table>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="data in datas" ng-if="data.kod === 1 || data.kod === 2">
+                            <td md-cell nowrap style="font-size: 14px;">
+                                <b>{{data.name}}</b>
+                            </td>
+                            <td md-cell nowrap>
+                                <div class="padded" md-whiteframe="1" layout layout-align="center left">
+                                    <span style="font-size: 16px;"> {{data.value}}</span></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </md-card>
+    </div>
+    <div
+         layout="row"
+         layout-xs="column"
+         layout-gt-xs="column"
+         layout-sm="column"
+         layout-gt-sm="column"
+         layout-md="column"
+         layout-gt-md="column"
+         layout-lg="column"
+         layout-gt-lg="row"
+         layout-xl="row"
+
+         ng-show="b_table_r1">
+            <md-card>
+                <md-toolbar class="md-theme-light">
+                    <h2 class="md-toolbar-tools">
+                        <span>Нараховано</span>
+                    </h2>
+                </md-toolbar>
+                <md-table-container class="b_r1_t">
+                    <table md-table>
+                        <tbody md-body>
+                        <tr md-row
+                            ng-repeat="data in datas" ng-if="data.type === null">
+                            <td md-cell nowrap>
+                                <b>{{data.name}}</b>
+                            </td>
+                            <td md-cell nowrap>
+                                <div class="padded" md-whiteframe="1" layout layout-align="center left">
+                                    <span style="font-size: 16px;"> {{data.value}}</span></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </md-card>
+            <md-card>
+                <md-toolbar class="md-theme-light">
+                    <h2 class="md-toolbar-tools">
+                        <span>Утримано</span>
+                    </h2>
+                </md-toolbar>
+                <md-table-container class="b_r1_t">
+                    <table md-table>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="data in datas"
+                            ng-if="(data.kod != 1 || data.kod != 2) && data.type === 2">
+                            <td md-cell nowrap>
+                                <b>{{data.name}}</b>
+                            </td>
+                            <td md-cell nowrap>
+                                <div class="padded" md-whiteframe="1" layout layout-align="center left">
+                                    <span style="font-size: 16px;"> {{data.value}}</span></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </md-card>
+            <md-card>
+                <md-toolbar class="md-theme-light">
+                    <h2 class="md-toolbar-tools">
+                        <span>Виплачено</span>
+                    </h2>
+                </md-toolbar>
+                <md-table-container class="b_r1_t">
+                    <table md-table>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="data in datas"
+                            ng-if="(data.kod != 1 || data.kod != 2) && data.type === 3">
+                            <td md-cell nowrap>
+                                <b>{{data.name}}</b>
+                            </td>
+                            <td md-cell nowrap>
+                                <div class="padded" md-whiteframe="1" layout layout-align="center left">
+                                    <span style="font-size: 16px;"> {{data.value}}</span></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </md-card>
+    </div>
+</div>

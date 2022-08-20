@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BlankApp" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.2/angular-material.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Реєстрація нового користувача</title>
+</head>
+<style>
+    .dwd {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        background: lightblue;
+        margin: 0.3em;
+        border-radius: 50%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    md-input-container {
+        margin: 9px 0 !important;
+    }
+
+    .hint {
+        position: absolute;
+        left: 2px;
+        right: auto;
+        bottom: 7px;
+        font-size: 12px;
+        line-height: 14px;
+        transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+        color: rgba(0, 0, 0, 0.54);
+    }
+
+    .hint.ng-hide,
+    .hint.ng-enter,
+    .hint.ng-leave.ng-leave-active {
+        bottom: 26px;
+        opacity: 0;
+    }
+
+    .hint.ng-leave,
+    .hint.ng-enter.ng-enter-active {
+        bottom: 7px;
+        opacity: 1;
+    }
+
+</style>
+<body ng-cloak ng-controller="MainCtrl">
+<div layout="column" layout-align="center center">
+    <div layout="column" class="md-whiteframe-24dp" style="max-width: 90%; width: 800px;">
+        <md-toolbar class="md-table-toolbar md-default">
+            <div class="md-toolbar-tools">
+                <span>Реєстрація нового користувача</span>
+            </div>
+        </md-toolbar>
+
+        <form name="regForm" ng-submit="submit()" method="post" novalidate>
+            <md-content layout="column" class="md-padding" ng-show="success">
+                <div layout="column" layout-align="center center">
+                    <md-input-container>
+                        <h1 class="md-title" style="color: green">Ви успішно зареєструвалися</h1>
+                    </md-input-container>
+                    <md-input-container>
+                        <md-button th:href="@{/}" class="md-raised md-primary">Перейти до сторінки входу</md-button>
+                    </md-input-container>
+                </div>
+            </md-content>
+            <md-content layout="column" class="md-padding" ng-show="data_form">
+                <div layout="row" layout-align="center center">
+                    <h2 class="md-title">Для реєстрації Вам потрібно:</h2>
+                </div>
+                <md-list-item class="md-1-line">
+                    <div class="md-list-item-text" layout="column">
+                        <p style="margin: 5px;"><b class="dwd">1</b> Ваш табельний номер в товаристві</p>
+                        <p style="margin: 5px;"><b class="dwd">2</b> Ваш персональний код ДРФО (Ідентифікаційний
+                            номер)
+                        </p>
+                        <p style="margin: 5px;"><b class="dwd">3</b> Ваша остання виплата (зарплата основна частина)
+                            на
+                            карточку в товаристві (не аванс) (Сума вказується з копійками у форматі 000,00 грн.)</p>
+                        <p style="margin: 5px;"><b class="dwd">4</b> Ваша будь яка електронна пошта, для відновлення
+                            паролю</p>
+                        <p style="margin: 5px;"><b class="dwd">5</b> Придумати та вести пароль для доступу в кабінет
+                        </p>
+                    </div>
+                </md-list-item>
+                <md-input-container>
+                </md-input-container>
+                <md-input-container>
+                    <label>Табельний номер</label>
+                    <input required type="text" ng-model="tab_nomer" ng-pattern="/^(\-[0-9]+|[0-9]+)?$/"/>
+                    <div class="hint">Наприклад: 111</div>
+                    <div ng-messages="loginForm.tab_nomer.$error">
+                        <div ng-message="required">Це потрібно.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Індефікаційний номер</label>
+                    <input required type="text" ng-model="drfo"/>
+                    <div ng-messages="loginForm.drfo.$error">
+                        <div ng-message="required">Це потрібно.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Остання виплата</label>
+                    <input required type="text" ng-model="pay"
+                           ng-pattern="/^(\-[0-9]+|[0-9]+)((\.|,)[0-9]{1,2})?$/"/>
+                    <div class="hint">Наприклад: 11000,00</div>
+                    <div ng-messages="loginForm.pay.$error">
+                        <div ng-message="required">Це потрібно.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Email</label>
+                    <input required type="text" ng-model="email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"/>
+                    <div ng-messages="loginForm.email.$error">
+                        <div ng-message="required">Це потрібно.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Пароль</label>
+                    <input required type="password" ng-model="password"/>
+                    <div ng-messages="loginForm.password.$error" role="alert">
+                        <div ng-message="required">Це потрібно.</div>
+                    </div>
+
+                </md-input-container>
+
+                <div layout="row" layout-align="center center" style="margin: 18px 0; color: red">
+                    {{alert}}
+                </div>
+
+
+                <div layout="row" layout-align="center center">
+                    <md-button type="submit" class="md-raised md-primary" ng-click="do()" ng-show="!activated"
+                               ng-disabled="regForm.$invalid">Зареєструватися
+                    </md-button>
+                    <div flex="20" layout="row" layout-sm="column" layout-align="space-around" ng-show="activated">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                    <div flex="flex"></div>
+                    <md-button th:href="@{/}" md-no-ink style="color: #1a73e8;">Відміна</md-button>
+                </div>
+
+            </md-content>
+        </form>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.2/angular-material.min.js"></script>
+<script>
+    var app = angular.module('BlankApp', ['ngMaterial', 'ngMessages']);
+
+    app.controller('MainCtrl', function ($scope, $http) {
+
+        $scope.activated = false;
+
+        $scope.success = false;
+        $scope.data_form = true;
+
+        $scope.do = function () {
+            $scope.activated = true;
+            $scope.alert = '';
+            $http({
+                url: 'registration',
+                method: "POST",
+                data: {
+                    tab_nomer: $scope.tab_nomer,
+                    drfo: $scope.drfo,
+                    pay: $scope.pay,
+                    email: $scope.email,
+                    password: $scope.password
+
+                }
+            })
+                .then(function (response) {
+                        if (response.data.success === true) {
+                            $scope.data_form = false;
+                            $scope.success = true;
+                        } else {
+                            $scope.alert = response.data.success
+                        }
+                        $scope.activated = false;
+                    },
+                    function (response) {
+                        $scope.alert = "Реєстрація не відбулась. Невірно введені реєстраційні дані."
+                        $scope.activated = false;
+                    });
+        };
+    });
+</script>
+</body>
+
+</html>

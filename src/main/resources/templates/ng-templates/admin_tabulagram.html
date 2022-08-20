@@ -1,0 +1,83 @@
+<div layout="column" ng-controller="load_tab" ng-init="load_tab_init()">
+
+    <md-card>
+        <md-toolbar class="md-table-toolbar md-default">
+            <div class="md-toolbar-tools">
+                <span>Завантаження табуляграм</span>
+                <div flex></div>
+                <!--<form action="/">
+                    <md-button type="submit" class="md-icon-button">
+                        <md-icon style="color: rgb(63,81,181);">close</md-icon>
+                    </md-button>
+                </form>-->
+            </div>
+        </md-toolbar>
+
+        <md-content layout-padding>
+            <form ng-cloak name="sudForm" novalidate>
+                <md-dialog-content>
+                    <md-content layout-gt-sm="row" layout-padding>
+                        <md-input-container>
+                        <label>Период</label>
+                        <md-select ng-model="period">
+                            <md-option ng-repeat="state in states" ng-value="state">
+                                {{state.namePeriod}}
+                            </md-option>
+                        </md-select>
+                        </md-input-container>
+                    </md-content>
+                    <md-content layout-gt-sm="row" layout-padding>
+                        <md-input-container>
+                            <input type="file" id="file_spr" name="file_spr"/>
+                        </md-input-container>
+                        <md-input-container>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">spr.DBF</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                        </md-input-container>
+
+                    </md-content>
+                    <md-content layout-gt-sm="row" layout-padding>
+                        <md-input-container>
+                            <input type="file" id="file_data" name="file_data"/>
+                        </md-input-container>
+                        <md-input-container>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">data.DBF</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                        </md-input-container>
+
+                    </md-content>
+
+                    <md-content layout-gt-sm="row" layout-padding>
+                        <md-input-container>
+
+                                <md-checkbox ng-model="enable_sent_email" aria-label="enable_sent_email">
+                                    Уведомить по электронной почте
+                                </md-checkbox>
+
+                        </md-input-container>
+                    </md-content>
+                    <md-content>
+                        <div layout="row" layout-align="end start">
+                            <md-button class="md-primary md-hue-2" ng-click="download_files()" ng-show="!activated">ЗАГРУЗИТЬ
+                            </md-button>
+                            <div flex="20" layout="row" layout-sm="column" layout-align="space-around" ng-show="activated">
+                                <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+                                <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+                            </div>
+
+                        </div>
+                    </md-content>
+                </md-dialog-content>
+
+
+            </form>
+
+        </md-content>
+    </md-card>
+</div>

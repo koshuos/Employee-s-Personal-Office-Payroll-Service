@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BlankApp" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.2/angular-material.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Персональний кабінет співробітника</title>
+</head>
+<body ng-cloak ng-controller="MainCtrl">
+<div layout="column" layout-align="center center" layout-fill="layout-fill">
+
+
+    <div layout="column" class="md-whiteframe-24dp" style="max-width: 90%; width: 400px">
+        <md-toolbar>
+            <h2 class="md-toolbar-tools"><span>Ласкаво просимо!</span></h2>
+        </md-toolbar>
+
+
+        <form name="loginForm" ng-submit="submit()" method="post">
+            <md-content layout="column" class="md-padding">
+                <div layout="row" layout-align="center center">
+
+                    <md-input-container>
+                        <img src="images/logo.png" alt="Logo">
+                    </md-input-container>
+                    <md-input-container>
+                        <h1 style="color: #ff4c3c;" class="docs-logotype md-heading ng-isolate-scope">Персональний</br> кабінет</br> співробітника</h1>
+                    </md-input-container>
+                </div>
+                <md-input-container>
+                    <label>Табельний номер</label>
+                    <input required type="text" ng-model="username" name="username"/>
+                    <div ng-messages="loginForm.username.$error">
+                        <div ng-message="required">Це потрібно.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Пароль</label>
+                    <input required type="password" ng-model="password" name="password"/>
+                    <div ng-messages="loginForm.password.$error" role="alert">
+                        <div ng-message="required">Це потрібно.</div>
+                    </div>
+
+                </md-input-container>
+
+                <div layout="row" layout-align="center center" th:if="${param.error != null}" style="margin: 18px 0;">
+                    <div th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}" style="color: red">
+                    </div>
+                </div>
+
+
+                <div layout="row" layout-align="center center">
+                    <md-button type="submit" class="md-raised md-primary">увійти</md-button>
+                    <div flex="flex"></div>
+                    <md-button th:href="@{forgetPassword}" md-no-ink style="color: var(--gm-colortextbutton-ink-color,#1a73e8);">Забули пароль</md-button>
+                </div>
+                <md-divider></md-divider>
+                <md-button th:href="@{registration}" md-no-ink style="color: var(--gm-colortextbutton-ink-color,#1a73e8); font-size: 13px;">Зареєструватися</md-button>
+
+            </md-content>
+        </form>
+
+    </div>
+    <md-button th:href="@{instruction}" md-no-ink style="color: var(--gm-colortextbutton-ink-color,#1a73e8); font-size: 10px;">Завантажити інструкцію</md-button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.2/angular-material.min.js"></script>
+<script>
+    var app = angular.module('BlankApp', ['ngMaterial', 'ngMessages']);
+
+    app.controller('MainCtrl', function ($scope, $http) {
+
+
+        $scope.submit = function () {
+            document.forms["loginForm"].submit();
+        };
+    });
+</script>
+</body>
+
+</html>

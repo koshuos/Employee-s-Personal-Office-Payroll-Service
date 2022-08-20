@@ -1,0 +1,80 @@
+<div layout="row" flex>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2 fill-height" md-component-id="left"
+                md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" ng-show="xxxx">
+
+        <header class="nav-header" style="background-color: #fafafa;">
+            <a ng-href="/" class="docs-logo" href="/">
+                <img src="images/logo.svg" alt="ZEP">
+                <!-- <h2 class="docs-logotype md-heading ng-isolate-scope" style=" color: #e00e0e !important; ">Зі
+                     світлом у серці до Вас!</h2>-->
+            </a>
+        </header>
+
+        <md-content role="navigation">
+            <ul class="side-menu">
+                <li ng-repeat="section in vm.menu.sections" class="parent-list-item"
+                    ng-class="{'parentActive' : vm.isSectionSelected(section)}">
+                    <h2 class="menu-heading" ng-if="section.type === 'heading'"
+                        id="heading_{{ section.name | nospace }}">
+                        {{section}}
+                    </h2>
+                    <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
+                    <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
+                </li>
+            </ul>
+
+        </md-content>
+    </md-sidenav>
+    <md-content flex>
+        <md-toolbar class="md-whiteframe-glow-z1">
+            <div class="md-toolbar-tools">
+                <div hide-gt-sm="" flex="">
+                    <md-button class="md-icon-button" ng-click="toggleLeft()">
+                        <span class="material-icons" style="color: #727282;">view_week</span>
+                    </md-button>
+                </div>
+
+                <div hide-sm="" hide-xs="" flex="">
+                    <md-button class="md-icon-button" ng-click="toggleLeft2()">
+                        <span class="material-icons" style="color: #727282;">view_week</span>
+                    </md-button>
+                </div>
+
+                <span flex></span>
+                <h2>
+                    <span class="fill-remaining-space"></span>Ви увійшли як: <span>{{username}}</span>
+                </h2>
+
+                <md-menu md-offset="0 70">
+                    <md-button aria-label="Open menu" class="md-icon-button"
+                               ng-click="openMenu($mdMenu, $event)">
+                        <md-icon md-menu-origin md-svg-icon="logou"></md-icon>
+                    </md-button>
+
+                    <md-menu-content width="4">
+                        <md-menu-item>
+                            <md-button ng-click="info()">
+                                <md-icon md-svg-icon="info2" md-menu-align-target></md-icon>
+                                Про додаток
+                            </md-button>
+                        </md-menu-item>
+
+                        <md-menu-divider></md-menu-divider>
+                        <form th:action="@{/logout}" method="post">
+                            <md-menu-item>
+                                <md-button type="submit">
+                                    <md-icon md-menu-origin md-svg-icon="exit2"></md-icon>
+                                    <span style="color: red; letter-spacing: 1px; font-size: 17px;">Вийти</span>
+                                </md-button>
+
+                            </md-menu-item>
+                        </form>
+                    </md-menu-content>
+                </md-menu>
+
+            </div>
+
+        </md-toolbar>
+        <ui-view name="content"></ui-view>
+    </md-content>
+</div>

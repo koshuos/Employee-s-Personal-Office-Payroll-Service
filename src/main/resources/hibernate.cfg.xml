@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.password">123</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://192.168.100.63:5432/internal</property>
+        <property name="hibernate.connection.username">internal</property>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.use_sql_comments">false</property>
+        <!--<property name="hibernate.id.new_generator_mappings">true</property>-->
+
+        <mapping class="com.internal.model.auth.User"/>
+        <mapping class="com.internal.model.auth.Authorities"/>
+
+       <mapping class="com.internal.model.LastPay"/>
+       <mapping class="com.internal.model.Employees"/>
+       <mapping class="com.internal.model.Registration"/>
+       <mapping class="com.internal.model.Users"/>
+       <mapping class="com.internal.model.UserRoles"/>
+       <mapping class="com.internal.model.VerificationtokenPassword"/>
+       <mapping class="com.internal.model.Period"/>
+       <mapping class="com.internal.model.TabulagramData"/>
+       <mapping class="com.internal.model.TabulagramSpr"/>
+       <mapping class="com.internal.model.SendEmailsEntity"/>
+
+
+    </session-factory>
+</hibernate-configuration>
